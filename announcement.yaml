@@ -1,18 +1,19 @@
-startTime: 1504224000
-endTime: 1504231200
-title: "System Maintenance Announcement"
-discription: "Dear users, we apologize for the downtime between 18:00-00:15 yesterday. Most systems have been recovered; we will resolve remaining issues over the next few days. If you face any problem, please feel free to contact us. Thank you!"
-pic: "17baobao.jpg"
+# startTime: 1504224000
+# endTime: 1504231200
+# title: "System Maintenance Announcement"
+# description: "Dear users, we apologize for the downtime between 18:00-00:15 yesterday. Most systems have been recovered; we will resolve remaining issues over the next few days. If you face any problem, please feel free to contact us. Thank you!"
+# pic: "17baobao.jpg"
 
-# EN:
-#   - startTime: 1504224000
-#     endTime: 1504231200
-#     title: "System Maintenance Announcement"
-#     discription: "Dear users, we apologize for the downtime between 18:00-00:15 yesterday. Most systems have been recovered; we will resolve remaining issues over the next few days. If you face any problem, please feel free to contact us. Thank you!"
-#     pic: "17baobao.jpg"
-# TW:
-#   - startTime: 1504224000
-#     endTime: 1504231200
-#     title: "系統維修公告"
-#     discription: "親愛的用戶，感謝您對17持續的支持。昨天晚上18:00至今天凌晨00:15的服務中斷，我們深感歉意。系統異常已大部分恢復，我們仍在進行細部微調，造成您的不便敬請見諒。如有問題歡迎隨時聯繫客服信箱，謝謝！"
-#     pic: "17baobao.jpg"
+announcements:
+  EN:
+      startTime: 1504224000
+      endTime: 1504231200
+      title: "System Maintenance Announcement"
+      description: "Dear users, we apologize for the downtime between 18:00-00:15 yesterday. Most systems have been recovered; we will resolve remaining issues over the next few days. If you face any problem, please feel free to contact us. Thank you!"
+      pic: "17baobao.jpg"
+  TW:
+      startTime: 1504224000
+      endTime: 1504231200
+      title: "系統維修公告"
+      description: "親愛的用戶，感謝您對17持續的支持。昨天晚上18:00至今天凌晨00:15的服務中斷，我們深感歉意。系統異常已大部分恢復，我們仍在進行細部微調，造成您的不便敬請見諒。如有問題歡迎隨時聯繫客服信箱，謝謝！"
+      pic: "17baobao.jpg"

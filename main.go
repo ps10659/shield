@@ -13,39 +13,50 @@ import (
 
 //var DB = make(map[string]string)
 
-type Announcement struct {
-	startTime int
-	endTime int
-	title string
-	discription string
-	pic string
+type announcement struct {
+	StartTime int `yaml:"startTime"`
+	EndTime int `yaml:"endTime"`
+	Title string `yaml:"title"`
+	Description string `yaml:"description"`
+	Pic string `yaml:"pic"`	
 }
 
 var (
 	announcementURL string = "https://raw.githubusercontent.com/ps10659/shield/master/announcement.yaml"
+	// announcementURL string = "file:///Users/jackychen/workspace/go/src/github.com/ps10659/shield/announcement.yaml"
+
 	ErrNoAnnouncement = errors.New("Announcement file not found")
-	
+
+	// announcements = map[string] announcement{}	
 )
 
-func getAnnouncement(c *gin.Context, announcementURL string) (Announcement, error) {
-	file, err := http.Get(announcementURL)
+func getAnnouncement(c *gin.Context, announcementURL string) (map[string] announcement, error) {
+	resp, err := http.Get(announcementURL)
+	if resp != nil {
+		defer resp.Body.Close()
+	}
+
 	if err != nil {
 		// handle err
 		//return nil, ErrNoAnnouncement
 	}
-	defer file.Body.Close()
+	
 
-	body, _ := ioutil.ReadAll(file.Body)
-    // c.String(http.StatusOK, string(body))
 
-    var announcement Announcement
-	err = yaml.Unmarshal(body, &announcement)
+	body, _ := ioutil.ReadAll(resp.Body)
+    c.String(http.StatusOK, string(body))
+
+
+    announcements := map[string] announcement{}	
+	err = yaml.Unmarshal(body, &announcements)
 	if err != nil {
         // return unmarshall error
     }
     // c.String(http.StatusOK, "\nannouncement: %#v\n", announcement)
+    // c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["EN"])
 
-	return announcement, nil
+
+	return announcements, nil
 }
 
 
@@ -60,12 +71,13 @@ func main() {
 	})
 
 	r.GET("/shield", func(c *gin.Context) {
-		announcement, err := getAnnouncement(c, announcementURL) 
+		announcements, err := getAnnouncement(c, announcementURL) 
 		if err != nil {
 			// return http status 204
 		}
 
-		c.String(http.StatusOK, "\nannouncement: %#v\n", announcement)
+		c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["EN"])
+		c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["TW"])
 		// c.JSON(http.StatusOK, announcement)
 
 		return
