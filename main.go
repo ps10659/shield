@@ -16,16 +16,8 @@ func main() {
 		c.JSON(200, gin.H{"message": "pong"})
 	})
 
-	// Get user value
-	r.GET("/user/:name", func(c *gin.Context) {
-		user := c.Params.ByName("name")
-		value, ok := DB[user]
-		if ok {
-			c.JSON(200, gin.H{"user": user, "value": value})
-		} else {
-			c.JSON(200, gin.H{"user": user, "status": "no value"})
-		}
-	})
+
+
 
 	// Listen and Server in 0.0.0.0:8080
 	r.Run(":8080")
