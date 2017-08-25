@@ -2,35 +2,34 @@ package main
 
 import (
 	"errors"
-	"net/http"
 	"io/ioutil"
+	"net/http"
 	// "reflect"
 	// "fmt"
 	// "encoding/json"
-	"gopkg.in/yaml.v2"	
 	"github.com/gin-gonic/gin"
+	"gopkg.in/yaml.v2"
 )
 
 //var DB = make(map[string]string)
 
-type Announcement struct {
-	StartTime int `yaml:"startTime"`
-	EndTime int `yaml:"endTime"`
-	Title string `yaml:"title"`
-	Description string `yaml:"description"`
-	Pic string `yaml:"pic"`	
+type announcement struct {
+	StartTime   int    `yaml:"startTime" json:"startTime"`
+	EndTime     int    `yaml:"endTime" json:"startTime"`
+	Title       string `yaml:"title" json:"title"`
+	Description string `yaml:"description" json:"description"`
+	Pic         string `yaml:"pic" json:"pic"`
 }
 
 var (
 	announcementURL string = "https://raw.githubusercontent.com/ps10659/shield/master/announcement.yaml"
-	// announcementURL string = "file:///Users/jackychen/workspace/go/src/github.com/ps10659/shield/announcement.yaml"
+
+	announcements = map[string]announcement{}
 
 	ErrNoAnnouncement = errors.New("Announcement file not found")
-
-	// announcements = map[string] announcement{}	
 )
 
-func getAnnouncement(c *gin.Context, announcementURL string) (map[string] Announcement, error) {
+func getAnnouncement(c *gin.Context, announcementURL string) error {
 	resp, err := http.Get(announcementURL)
 	if resp != nil {
 		defer resp.Body.Close()
@@ -40,25 +39,20 @@ func getAnnouncement(c *gin.Context, announcementURL string) (map[string] Announ
 		// handle err
 		//return nil, ErrNoAnnouncement
 	}
-	
 
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		// err
+	}
+	// c.String(http.StatusOK, string(body))
 
-	body, _ := ioutil.ReadAll(resp.Body)
-    c.String(http.StatusOK, string(body))
-
-
-    announcements := map[string] Announcement{}	
 	err = yaml.Unmarshal(body, &announcements)
 	if err != nil {
-        // return unmarshall error
-    }
+		// return unmarshall error
+	}
 
-	c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["EN"])
-	c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["TW"])
-
-	return announcements, nil
+	return nil
 }
-
 
 func main() {
 	// Disable Console Color
@@ -71,14 +65,18 @@ func main() {
 	})
 
 	r.GET("/shield", func(c *gin.Context) {
-		_, err := getAnnouncement(c, announcementURL) 
+		err := getAnnouncement(c, announcementURL)
 		if err != nil {
-			// return http status 204
+			if err == ErrNoAnnouncement {
+				// return http status 204
+			}
+			// other err do something?
+
+			return
 		}
 
-		// c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["EN"])
-		// c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["TW"])
-		// c.JSON(http.StatusOK, announcement)
+		c.JSON(http.StatusOK, announcements["EN"])
+		c.JSON(http.StatusOK, announcements["TW"])
 
 		return
 	})
@@ -86,4 +84,3 @@ func main() {
 	// Listen and Server in 0.0.0.0:8080
 	r.Run(":8080")
 }
-
