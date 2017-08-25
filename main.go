@@ -65,6 +65,9 @@ func main() {
 	})
 
 	r.GET("/shield", func(c *gin.Context) {
+		// to be modified
+		language := c.Request.Header.Get("language")
+
 		err := getAnnouncement(c, announcementURL)
 		if err != nil {
 			if err == ErrNoAnnouncement {
@@ -75,8 +78,27 @@ func main() {
 			return
 		}
 
-		c.JSON(http.StatusOK, announcements["EN"])
-		// c.JSON(http.StatusOK, announcements["TW"])
+		switch language {
+		case "TW":
+			c.JSON(http.StatusOK, announcements["TW"])
+		default:
+			c.JSON(http.StatusOK, announcements["EN"])
+		}
+
+		return
+	})
+
+	r.GET("/shield0", func(c *gin.Context) {
+		err := getAnnouncement(c, announcementURL)
+		if err != nil {
+			if err == ErrNoAnnouncement {
+				// return http status 204
+			}
+			// other err do something?
+
+			return
+		}
+		c.JSON(http.StatusOK, announcements["TW"])
 
 		return
 	})
