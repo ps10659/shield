@@ -13,7 +13,7 @@ func main() {
 
 	// Ping test
 	r.GET("/ping", func(c *gin.Context) {
-		c.String(200, "pong")
+		c.JSON(200, gin.H{"message": "pong"})
 	})
 
 	// Get user value
@@ -30,3 +30,4 @@ func main() {
 	// Listen and Server in 0.0.0.0:8080
 	r.Run(":8080")
 }
+
