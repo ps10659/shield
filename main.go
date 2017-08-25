@@ -15,7 +15,7 @@ import (
 
 type announcement struct {
 	StartTime   int    `yaml:"startTime" json:"startTime"`
-	EndTime     int    `yaml:"endTime" json:"startTime"`
+	EndTime     int    `yaml:"endTime" json:"endTime"`
 	Title       string `yaml:"title" json:"title"`
 	Description string `yaml:"description" json:"description"`
 	Pic         string `yaml:"pic" json:"pic"`
@@ -76,7 +76,7 @@ func main() {
 		}
 
 		c.JSON(http.StatusOK, announcements["EN"])
-		c.JSON(http.StatusOK, announcements["TW"])
+		// c.JSON(http.StatusOK, announcements["TW"])
 
 		return
 	})
