@@ -52,9 +52,9 @@ func getAnnouncement(c *gin.Context, announcementURL string) (map[string] announ
 	if err != nil {
         // return unmarshall error
     }
-    // c.String(http.StatusOK, "\nannouncement: %#v\n", announcement)
-    // c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["EN"])
 
+	c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["EN"])
+	c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["TW"])
 
 	return announcements, nil
 }
@@ -71,13 +71,13 @@ func main() {
 	})
 
 	r.GET("/shield", func(c *gin.Context) {
-		announcements, err := getAnnouncement(c, announcementURL) 
+		_, err := getAnnouncement(c, announcementURL) 
 		if err != nil {
 			// return http status 204
 		}
 
-		c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["EN"])
-		c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["TW"])
+		// c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["EN"])
+		// c.String(http.StatusOK, "\nannouncement: %+v\n", announcements["TW"])
 		// c.JSON(http.StatusOK, announcement)
 
 		return
