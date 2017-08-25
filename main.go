@@ -13,7 +13,7 @@ import (
 
 //var DB = make(map[string]string)
 
-type announcement struct {
+type Announcement struct {
 	StartTime int `yaml:"startTime"`
 	EndTime int `yaml:"endTime"`
 	Title string `yaml:"title"`
@@ -30,7 +30,7 @@ var (
 	// announcements = map[string] announcement{}	
 )
 
-func getAnnouncement(c *gin.Context, announcementURL string) (map[string] announcement, error) {
+func getAnnouncement(c *gin.Context, announcementURL string) (map[string] Announcement, error) {
 	resp, err := http.Get(announcementURL)
 	if resp != nil {
 		defer resp.Body.Close()
@@ -47,7 +47,7 @@ func getAnnouncement(c *gin.Context, announcementURL string) (map[string] announ
     c.String(http.StatusOK, string(body))
 
 
-    announcements := map[string] announcement{}	
+    announcements := map[string] Announcement{}	
 	err = yaml.Unmarshal(body, &announcements)
 	if err != nil {
         // return unmarshall error
