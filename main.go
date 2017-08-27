@@ -51,7 +51,7 @@ func main() {
 	// authorized user only
 	r.GET("/shield/set/:action", setShield)
 	r.GET("/shield/info", getShieldInfo)
-	r.GET("/webhook", webhook)
+	r.POST("/webhook", webhook)
 
 	// for all users
 	r.GET("/announcement", getAnnouncement)
