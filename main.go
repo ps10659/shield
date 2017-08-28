@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 	// "reflect"
-	// "fmt"
+	"fmt"
 	// "encoding/json"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/yaml.v2"
@@ -74,17 +74,21 @@ func setShield(c *gin.Context) {
 		shielding_all = false
 		c.JSON(http.StatusOK, gin.H{"shielding_all": shielding_all})
 	default:
-		// Should this case return 4XX ???
-		c.Status(http.StatusNoContent)
+		c.String(http.StatusBadRequest, "Wrong action(/shield/set/:action)")
 	}
+
+	return
 }
 
 func getShieldInfo(c *gin.Context) {
 	info := status{Shielding_all: shielding_all, Announcements: announcements}
+
 	c.JSON(http.StatusOK, info)
+	return
 }
 
 func webhook(c *gin.Context) {
+	fmt.Println("Waiting for github to update its DB")
 	time.Sleep(githubUpdateRawUserContentWaitingTime)
 
 	err := updateAnnouncement(announcementURL)
@@ -93,6 +97,7 @@ func webhook(c *gin.Context) {
 		c.Status(http.StatusNoContent)
 		return
 	}
+
 	c.Status(http.StatusOK)
 	return
 }
@@ -109,9 +114,9 @@ func getAnnouncement(c *gin.Context) {
 		c.JSON(http.StatusOK, ann)
 		return
 	}
+
 	c.JSON(http.StatusOK, announcements["EN"])
 	return
-
 }
 
 func updateAnnouncement(announcementURL string) error { //Still need to pass gin.Context?
@@ -131,7 +136,6 @@ func updateAnnouncement(announcementURL string) error { //Still need to pass gin
 	if err != nil {
 		// err
 	}
-	// c.String(http.StatusOK, string(body))
 
 	err = yaml.Unmarshal(body, &announcements)
 	if err != nil {
