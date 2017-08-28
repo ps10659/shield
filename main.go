@@ -4,8 +4,8 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"time"
-	// "strconv"
 	// "reflect"
 	// "fmt"
 	// "encoding/json"
@@ -38,8 +38,10 @@ var (
 	shielding_all = false
 
 	// update announcement from github at most once an updateDuration time
-	updateDuration  = time.Second * 5
-	lastUpadateTime time.Time
+	// updateDuration  = time.Second * 5
+	// lastUpadateTime time.Time
+	// waite for github to update its db
+	githubUpdateRawUserContentWaitingTime = time.Second * 60
 
 	// err
 	ErrNoAnnouncement = errors.New("Announcement file not found")
@@ -47,6 +49,7 @@ var (
 
 func main() {
 	r := gin.Default()
+	updateAnnouncement(announcementURL)
 
 	// authorized user only
 	r.GET("/shield/set/:action", setShield)
@@ -77,22 +80,20 @@ func setShield(c *gin.Context) {
 }
 
 func getShieldInfo(c *gin.Context) {
-	err := updateAnnouncement(c, announcementURL)
-	if err != nil {
-		// err
-	}
-
 	info := status{Shielding_all: shielding_all, Announcements: announcements}
 	c.JSON(http.StatusOK, info)
 }
 
 func webhook(c *gin.Context) {
-	err := updateAnnouncement(c, announcementURL)
+	time.Sleep(githubUpdateRawUserContentWaitingTime)
+
+	err := updateAnnouncement(announcementURL)
 	if err != nil && err == ErrNoAnnouncement {
 		// c.Status(http.StatusNoContent)
 		c.Status(http.StatusNoContent)
 		return
 	}
+	c.Status(http.StatusOK)
 	return
 }
 
@@ -103,29 +104,22 @@ func getAnnouncement(c *gin.Context) {
 	}
 
 	language := c.Request.Header.Get("language") // MustGet fail why???
-	duration := time.Now().Sub(lastUpadateTime)  // Will this line cause server bad performance?
-	if duration > updateDuration {
-		err := updateAnnouncement(c, announcementURL)
-		if err != nil && err == ErrNoAnnouncement {
-			// c.Status(http.StatusNoContent)
-			c.Status(http.StatusNoContent)
-			return
-		}
-		// if other err, do something
+	ann, ok := announcements[language]
+	if ok {
+		c.JSON(http.StatusOK, ann)
+		return
 	}
-
-	switch language {
-	case "TW":
-		c.JSON(http.StatusOK, announcements["TW"])
-	default:
-		c.JSON(http.StatusOK, announcements["EN"])
-	}
+	c.JSON(http.StatusOK, announcements["EN"])
 	return
+
 }
 
-func updateAnnouncement(c *gin.Context, announcementURL string) error { //Still need to pass gin.Context?
-	lastUpadateTime = time.Now()
-	resp, err := http.Get(announcementURL)
+func updateAnnouncement(announcementURL string) error { //Still need to pass gin.Context?
+	// lastUpadateTime = time.Now()
+
+	timestamp := time.Now().Unix()
+	url := announcementURL + "?timestamp=" + strconv.FormatInt(timestamp, 10)
+	resp, err := http.Get(url)
 	if resp != nil {
 		defer resp.Body.Close()
 	}
