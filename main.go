@@ -88,7 +88,7 @@ func getShieldInfo(c *gin.Context) {
 }
 
 func webhook(c *gin.Context) {
-	fmt.Println("[webhook] Waiting for github to update its DB...")
+	fmt.Println("[Webhook] Waiting for Github to update its DB...")
 	time.Sleep(githubUpdateRawUserContentWaitingTime)
 
 	err := updateAnnouncement(announcementURL)
