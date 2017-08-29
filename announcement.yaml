@@ -1,4 +1,4 @@
-shieldingAll: false
+shieldingAll: ""
 announcements:
     EN:
         startTime: 999999
