@@ -1,24 +1,26 @@
-EN:
-    startTime: 1504224000
-    endTime: 1504231200
-    title: "System Maintenance Announcement"
-    description: "Dear users, we apologize for the downtime between 18:00-00:15 yesterday. Most systems have been recovered; we will resolve remaining issues over the next few days. If you face any problem, please feel free to contact us. Thank you!"
-    pic: "17baobao.jpg"
-TW:
-    startTime: 1504224000
-    endTime: 1504231200
-    title: "系統維修公告"
-    description: "親愛的用戶，感謝您對17持續的支持。昨天晚上18:00至今天凌晨00:15的服務中斷，我們深感歉意。系統異常已大部分恢復，我們仍在進行細部微調，造成您的不便敬請見諒。如有問題歡迎隨時聯繫客服信箱，謝謝！"
-    pic: "17baobao.jpg"
-JP:
-    startTime: 1504224000
-    endTime: 1504231200
-    title: "システムメンテナンス情報"
-    description: "皆様、ご支援いただき、ありがとうございます。昨日の夜18時から今日の朝00時15分までのサービスが中断されました。異常なシステムが大幅に復元されました。私たちはまだ詳細を微調整しています。あなたの不便を引き起こしました。私を許してください。ご不明な点がございましたら、カスタマーサービスのメールボックスにお気軽にお問い合わせください。ありがとうございます！"
-    pic: "17baobao.jpg"
-CN:
-    startTime: 1504224000
-    endTime: 1504231200
-    title: "系统维修公告"
-    description: "亲爱的用户，感谢您对17持续的支持。昨天晚上18:00至今天凌晨00:15的服务中断，我们深感歉意。系统异常已大部分恢复，我们仍在进行细部微调，造成您的不便敬请见谅。如有问题欢迎随时联系客服信箱，谢谢！"
-    pic: "17baobao.jpg"
+shieldingAll: true
+announcements:
+    EN:
+        startTime: 1504224000
+        endTime: 1504231200
+        title: "System Maintenance Announcement"
+        description: "Dear users, we apologize for the downtime between 18:00-00:15 yesterday. Most systems have been recovered; we will resolve remaining issues over the next few days. If you face any problem, please feel free to contact us. Thank you!"
+        pic: "17baobao.jpg"
+    TW:
+        startTime: 1504224000
+        endTime: 1504231200
+        title: "系統維修公告"
+        description: "親愛的用戶，感謝您對17持續的支持。昨天晚上18:00至今天凌晨00:15的服務中斷，我們深感歉意。系統異常已大部分恢復，我們仍在進行細部微調，造成您的不便敬請見諒。如有問題歡迎隨時聯繫客服信箱，謝謝！"
+        pic: "17baobao.jpg"
+    JP:
+        startTime: 1504224000
+        endTime: 1504231200
+        title: "システムメンテナンス情報"
+        description: "皆様、ご支援いただき、ありがとうございます。昨日の夜18時から今日の朝00時15分までのサービスが中断されました。異常なシステムが大幅に復元されました。私たちはまだ詳細を微調整しています。あなたの不便を引き起こしました。私を許してください。ご不明な点がございましたら、カスタマーサービスのメールボックスにお気軽にお問い合わせください。ありがとうございます！"
+        pic: "17baobao.jpg"
+    CN:
+        startTime: 1504224000
+        endTime: 1504231200
+        title: "系统维修公告"
+        description: "亲爱的用户，感谢您对17持续的支持。昨天晚上18:00至今天凌晨00:15的服务中断，我们深感歉意。系统异常已大部分恢复，我们仍在进行细部微调，造成您的不便敬请见谅。如有问题欢迎随时联系客服信箱，谢谢！"
+        pic: "17baobao.jpg"
